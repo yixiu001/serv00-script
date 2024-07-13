@@ -43,12 +43,12 @@ deploy_vless() {
     local port=${1:-3000}  # Default port is 3000 if not provided
     # 修改端口号
     save_config "$port"
-    # 安装依赖
-    npm install
     # 赋予vless维护脚本权限
     chmod +x ./vless/check_vless.sh
     # 进入工作目录
     cp -r ./vless ~/domains/$USER.serv00.net
+    # 安装依赖
+    cd ./vless && npm install
     # 启动vless项目
     ~/.npm-global/bin/pm2 start ~/domains/$USER.serv00.net/vless/app.js --name vless
     # 保存pm2进程状态
