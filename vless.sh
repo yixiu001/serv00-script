@@ -44,6 +44,8 @@ deploy_vless() {
 
     save_config "$port"
 
+    npm install
+
     cp -r ./vless ~/domains/$USER.serv00.net
 
     ~/.npm-global/bin/pm2 start ~/domains/$USER.serv00.net/vless/app.js --name vless
