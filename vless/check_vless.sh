@@ -55,7 +55,7 @@ start_pm2_vless_process() {
 
 # 检查vless的状态
 check_vless_status() {
-    status=$(pm2 status vless | grep -w 'vless' | awk '{print $12}')
+    status=$(pm2 status vless | grep -w 'vless' | awk '{print $18}')
     if [[ "$status" == "online" ]]; then
         echo "vless进程正在运行。"
     else
