@@ -20,6 +20,21 @@ output_yi_xiu() {
     echo -e "--------------------------------------------------------------------------------------------------"
     echo -e "一休YouTuBe: ${GREEN}https://www.youtube.com/@yixiu001${NC}"
     echo -e "TG技术交流群: ${GREEN}https://t.me/yxjsjl${NC}"
+    echo -e "--------------------------------------------------------------------------------------------------"
+
+    # 读取 config.json 中的 uuid 和 port
+    if [[ -f config.json ]]; then
+        uuid=$(jq -r '.uuid' config.json)
+        port=$(jq -r '.port' config.json)
+        echo -e "UUID: ${uuid}"
+        echo -e "Port: ${port}"
+        echo -e "域名: ${GREEN}$USER.serv00.net${NC}"
+        echo -e "vless进程维护定时任务脚本: ${GREEN}~/domains/$USER.serv00.net/vless/check_vless.sh${NC}"
+        echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
+
+    else
+        echo -e "${GREEN}config.json 文件不存在或格式错误。${NC}"
+    fi
 }
 
 # 检查pm2 vless的状态

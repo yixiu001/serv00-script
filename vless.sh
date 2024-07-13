@@ -45,10 +45,10 @@ deploy_vless() {
     save_config "$port"
     # 赋予vless维护脚本权限
     chmod +x ./vless/check_vless.sh
+    # 安装依赖
+    npm install --prefix ./vless
     # 进入工作目录
     cp -r ./vless ~/domains/$USER.serv00.net
-    # 安装依赖
-    cd ./vless && npm install
     # 启动vless项目
     ~/.npm-global/bin/pm2 start ~/domains/$USER.serv00.net/vless/app.js --name vless
     # 保存pm2进程状态
