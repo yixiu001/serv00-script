@@ -69,13 +69,15 @@ echo -e "| |   |______|   | || |    |_____|   | || | |____||____| | || |    |___
 echo -e "| |              | || |              | || |              | || |              | || |              | |"
 echo -e "| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |"
 echo -e " '----------------'  '----------------'  '----------------'  '----------------'  '----------------' ${NC}"
-
-
-# 输出端口号和UUID以及vless节点
-echo -e "${GREEN}端口号: ${port}${NC}"
-echo -e "${GREEN}UUID: ${uuid}${NC}"
-echo -e "${GREEN}域名: $USER.serv00.net${NC}"
-echo -e "${GREEN}VLESS: vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#%E4%B8%80%E4%BC%91vless%EF%BC%8CTG%E7%BE%A4%EF%BC%9Ahttps://t.me/yxjsjl${NC}"
+echo -e "--------------------------------------------------------------------------------------------------"
+echo -e "一休YouTuBe: ${GREEN}https://www.youtube.com/@yixiu001${NC}"
+echo -e "TG技术交流群: ${GREEN}https://t.me/yxjsjl${NC}"
+echo -e "--------------------------------------------------------------------------------------------------"
+echo -e "端口号: ${GREEN}${port}${NC}"
+echo -e "UUID: ${GREEN}${uuid}${NC}"
+echo -e "域名: ${GREEN}$USER.serv00.net${NC}"
+echo -e "vless进程维护定时任务脚本: ${GREEN}~/domains/$USER.serv00.net/vless/check_vless.sh${NC}"
+echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
 }
 
 # Main function
