@@ -85,14 +85,10 @@ main() {
     done
     shift $((OPTIND -1))
 
-    if [[ "$1" == "install" && "$2" == "vless" ]]; then
-        echo "正在安装pm2..."
-        install_pm2
-        echo "正在安装vless..."
-        deploy_vless "$port"
-    else
-        echo "无效命令。请使用 'install vless'。"
-    fi
+    echo "正在安装pm2..."
+    install_pm2
+    echo "正在安装vless..."
+    deploy_vless "$port"
 }
 
 # 执行主函数
