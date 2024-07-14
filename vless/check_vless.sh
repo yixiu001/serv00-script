@@ -125,27 +125,27 @@ main() {
     if $port_provided; then
         echo "正在安装vless..."
         deploy_vless "$port"
-        exit 1;
     else
         echo "没有提供-p参数，跳过vless安装。"
+        output_yi_xiu
+        # 读取 config.json 中的 uuid 和 port
+        if [[ -f config.json ]]; then
+            uuid=$(jq -r '.uuid' config.json)
+            port=$(jq -r '.port' config.json)
+            echo -e "UUID: ${uuid}"
+            echo -e "Port: ${port}"
+            echo -e "域名: ${GREEN}$USER.serv00.net${NC}"
+            echo -e "vless进程维护定时任务脚本: ${GREEN}~/domains/$USER.serv00.net/vless/check_vless.sh${NC}"
+            echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
+
+        else
+            echo -e "${GREEN}config.json 文件不存在或格式错误。${NC}"
+        fi
+        echo "开始检查pm2 vless进程..."
+        check_pm2_vless_status
     fi
 
-    output_yi_xiu
-    # 读取 config.json 中的 uuid 和 port
-    if [[ -f config.json ]]; then
-        uuid=$(jq -r '.uuid' config.json)
-        port=$(jq -r '.port' config.json)
-        echo -e "UUID: ${uuid}"
-        echo -e "Port: ${port}"
-        echo -e "域名: ${GREEN}$USER.serv00.net${NC}"
-        echo -e "vless进程维护定时任务脚本: ${GREEN}~/domains/$USER.serv00.net/vless/check_vless.sh${NC}"
-        echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
 
-    else
-        echo -e "${GREEN}config.json 文件不存在或格式错误。${NC}"
-    fi
-    echo "开始检查pm2 vless进程..."
-    check_pm2_vless_status
 }
 
 # 执行主函数
