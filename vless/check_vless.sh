@@ -33,7 +33,32 @@ check_pm2_vless_status() {
         check_pm2_vless_snapshot
     fi
 }
+# Function to generate a UUID
+generate_uuid() {
+    for i in {1..3}; do
+        uuid=$(uuidgen)
+        if [[ -n "$uuid" ]]; then
+            echo "$uuid"
+            return
+        fi
+    done
 
+    # 预定义的UUID列表
+    predefined_uuids=(
+        "fb210b24-46dd-4b4c-92ce-097385945dad"
+        "53cfcb07-8c25-4c25-baaa-95b4b50871a2"
+        "445ae56f-727d-495e-9c88-cbe942d144a6"
+        "078eb39d-2094-4272-b221-782ba0520dd6"
+        "5826e9cc-c5b7-49ca-8b37-a0ea68f382cc"
+        "e79fda4a-9519-4ef3-8973-130801b3d0ae"
+        "c0422b3b-00aa-4dbe-8573-6fb15d49e557"
+        "907e3ac9-02de-47fe-b40c-c2bd912c3adf"
+        "c53ca34c-8d9c-4a7e-8b44-5da52e4b5eaa"
+        "73fc0a2d-2458-435b-92aa-b4e8e3e40944"
+    )
+    uuid=${predefined_uuids[$RANDOM % ${#predefined_uuids[@]}]}
+    echo "$uuid"
+}
 # Function to save config.json
 save_config() {
     local port=$1
@@ -110,7 +135,7 @@ main() {
     local port=3000  # Default port
     port_provided=false  # Flag to check if port is provided
 
-    while getopts ":p" opt; do
+    while getopts ":p:" opt; do
         case $opt in
             p)
                 port=$OPTARG
@@ -122,8 +147,6 @@ main() {
     done
     shift $((OPTIND -1))
 
-    echo -e $port
-    echo -e $port_provided
     if [ "$port_provided" = true ]; then
         echo "正在安装vless..."
         deploy_vless "$port"
