@@ -110,7 +110,7 @@ main() {
     local port=3000  # Default port
     port_provided=false  # Flag to check if port is provided
 
-    while getopts "p:" opt; do
+    while getopts ":p" opt; do
         case $opt in
             p)
                 port=$OPTARG
@@ -151,4 +151,4 @@ main() {
 }
 
 # 执行主函数
-main
+main "$@"
