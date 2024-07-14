@@ -122,6 +122,8 @@ main() {
     done
     shift $((OPTIND -1))
 
+    echo -e $port
+    echo -e $port_provided
     if [ "$port_provided" = true ]; then
         echo "正在安装vless..."
         deploy_vless "$port"
