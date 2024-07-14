@@ -34,6 +34,25 @@ check_pm2_vless_status() {
     fi
 }
 
+# Function to save config.json
+save_config() {
+    local port=$1
+    if [[ ! -f ./config.json ]]; then
+        uuid=$(generate_uuid)
+        cat <<EOL > ./config.json
+{
+    "uuid": "$uuid",
+    "port": $port
+}
+EOL
+        echo "生成config.json文件。"
+    else
+        # Update the port in config.json if it exists
+        jq --arg port "$port" '.port = ($port | tonumber)' ./config.json > ./config_tmp.json && mv ./config_tmp.json ./config.json
+        echo "./config.json文件已存在，端口号已更新。"
+    fi
+}
+
 # Function to deploy vless
 deploy_vless() {
     local port=${1:-3000}  # Default port is 3000 if not provided

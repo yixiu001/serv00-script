@@ -45,24 +45,7 @@ generate_uuid() {
     uuid=${predefined_uuids[$RANDOM % ${#predefined_uuids[@]}]}
     echo "$uuid"
 }
-# Function to save config.json
-save_config() {
-    local port=$1
-    if [[ ! -f ./vless/config.json ]]; then
-        uuid=$(generate_uuid)
-        cat <<EOL > ./vless/config.json
-{
-    "uuid": "$uuid",
-    "port": $port
-}
-EOL
-        echo "生成./vless/config.json文件。"
-    else
-        # Update the port in config.json if it exists
-        jq --arg port "$port" '.port = ($port | tonumber)' ./vless/config.json > ./vless/config_tmp.json && mv ./vless/config_tmp.json ./vless/config.json
-        echo "./vless/config.json文件已存在，端口号已更新。"
-    fi
-}
+
 
 # Function to deploy vless
 deploy_vless() {
