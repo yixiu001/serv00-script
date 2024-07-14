@@ -56,7 +56,7 @@ EOL
 # Function to deploy vless
 deploy_vless() {
     local port=${1:-3000}  # Default port is 3000 if not provided
-    echo "修改端口号"
+    # 修改端口号
     save_config "$port"
     # 安装依赖
     npm install
@@ -122,7 +122,7 @@ main() {
     done
     shift $((OPTIND -1))
 
-    if $port_provided; then
+    if [ "$port_provided" = true ]; then
         echo "正在安装vless..."
         deploy_vless "$port"
     else
