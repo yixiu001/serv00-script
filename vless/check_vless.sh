@@ -37,9 +37,9 @@ check_pm2_vless_status() {
 # Function to save config.json
 save_config() {
     local port=$1
-    if [[ ! -f ./config.json ]]; then
+    if [[ ! -f ~/domains/$USER.serv00.net/vless/config.json ]]; then
         uuid=$(generate_uuid)
-        cat <<EOL > ./config.json
+        cat <<EOL > ~/domains/$USER.serv00.net/vless/config.json
 {
     "uuid": "$uuid",
     "port": $port
@@ -48,8 +48,8 @@ EOL
         echo "生成config.json文件。"
     else
         # Update the port in config.json if it exists
-        jq --arg port "$port" '.port = ($port | tonumber)' ./config.json > ./config_tmp.json && mv ./config_tmp.json ./config.json
-        echo "./config.json文件已存在，端口号已更新。"
+        jq --arg port "$port" '.port = ($port | tonumber)' ~/domains/$USER.serv00.net/vless/config.json > ~/domains/$USER.serv00.net/vless/config_tmp.json && mv ~/domains/$USER.serv00.net/vless/config_tmp.json ~/domains/$USER.serv00.net/vless/config.json
+        echo "config.json文件已存在，端口号已更新。"
     fi
 }
 
