@@ -1,61 +1,33 @@
-name: 恢复vless服务
+name: 恢复vless服务并发送Telegram消息
 
 on:
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: '*/20 * * * *'  # 每20分钟执行一次
   workflow_dispatch:
 
 jobs:
-  restore:
+  restore_and_notify:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: 配置环境：设置 jq 和 sshpass
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq sshpass
+      - name: 设置Python环境
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # 替换为您需要的 Python 版本
 
-      - name: 恢复 vless 并发送电报消息
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests  # 只需安装需要的依赖，此处假设使用 requests 发送 HTTP 请求
+
+      - name: 执行Python脚本恢复vless服务并发送Telegram消息
         env:
           ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          # 从JSON字符串中解析服务器列表
-          servers=$(echo $ACCOUNTS_JSON | jq -c '.[]')
-          
-          # 定义恢复vless的命令
-          restore_command="cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh"
-          
-          # 初始化汇总消息
-          summary_message="serv00-vless 恢复操作结果："
-          
-          # 遍历服务器列表并执行恢复命令
-          for server in $servers; do
-            host=$(echo $server | jq -r '.host')
-            port=$(echo $server | jq -r '.port')
-            username=$(echo $server | jq -r '.username')
-            password=$(echo $server | jq -r '.password')
-          
-            echo "正在连接到 $host..."
-          
-            # 执行恢复命令
-            output=$(sshpass -p "$password" ssh -o StrictHostKeyChecking=no -p "$port" "$username@$host" "$restore_command" 2>&1)
-          
-            # 检查命令是否成功并更新汇总消息
-            if [[ $? -eq 0 ]]; then
-              summary_message+="\n\n成功恢复 $host 上的 vless 服务：\n$output"
-            else
-              summary_message+="\n\n无法恢复 $host 上的 vless 服务：\n$output"
-            fi
-          done
-          
-          # 发送汇总消息到Telegram，添加带按钮的内联键盘
-          curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
-            -d "chat_id=$TELEGRAM_CHAT_ID" \
-            -d "text=$summary_message" \
-            -d "parse_mode=Markdown" \
-            -d 'reply_markup={"inline_keyboard":[[{"text":"问题反馈❓","url":"https://t.me/yxjsjl"}]]}'
+          python3 vless/recover_vless.py
+
