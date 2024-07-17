@@ -30,19 +30,21 @@
    ```json
    [
        {
-           "host": "server1_ip",
+           "host": "example1.com",
            "port": 22,
-           "username": "your_username",
-           "password": "your_password"
+           "username": "user1",
+           "password": "password1",
+           "cron": "cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh"
        },
        {
-           "host": "server2_ip",
+           "host": "example2.com",
            "port": 22,
-           "username": "your_username",
-           "password": "your_password"
+           "username": "user2",
+           "password": "password2"
+           // 没有cron参数，使用默认命令
        }
-       // 添加更多服务器
    ]
+
    ```
 
 2. **设置 Telegram Secrets**
