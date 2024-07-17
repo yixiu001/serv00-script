@@ -1,6 +1,7 @@
 import os
 import json
 import subprocess
+import requests
 
 # 从环境变量中获取密钥
 accounts_json = os.getenv('ACCOUNTS_JSON')
@@ -38,9 +39,9 @@ telegram_payload = {
     "parse_mode": "Markdown",
     "reply_markup": '{"inline_keyboard":[[{"text":"问题反馈❓","url":"https://t.me/yxjsjl"}]]}'
 }
-response = subprocess.run(["curl", "-s", "-X", "POST", telegram_url, "-d", json.dumps(telegram_payload)])
+response = requests.post(telegram_url, json=telegram_payload)
 
-if response.returncode != 0:
+if response.status_code != 200:
     print("发送 Telegram 消息失败")
 else:
     print("发送 Telegram 消息成功")
