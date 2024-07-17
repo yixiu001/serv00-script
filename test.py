@@ -39,7 +39,17 @@ telegram_payload = {
     "parse_mode": "Markdown",
     "reply_markup": '{"inline_keyboard":[[{"text":"问题反馈❓","url":"https://t.me/yxjsjl"}]]}'
 }
+
+# 打印请求的详细信息
+print(f"Telegram 请求 URL: {telegram_url}")
+print(f"Telegram 请求 Payload: {telegram_payload}")
+
+# 发送请求到 Telegram
 response = requests.post(telegram_url, json=telegram_payload)
+
+# 打印请求的状态码和返回内容
+print(f"Telegram 请求状态码：{response.status_code}")
+print(f"Telegram 请求返回内容：{response.text}")
 
 if response.status_code != 200:
     print("发送 Telegram 消息失败")
