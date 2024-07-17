@@ -18,14 +18,14 @@
   - 获取您的 Telegram 用户或群组的 Chat ID。
 3. **GitHub Secrets**
   - 在您的 GitHub 仓库中设置以下 Secrets：
-  - SERVERS_JSON：包含所有服务器信息的 JSON 字符串。
+  - ACCOUNTS_JSON：包含所有服务器信息的 JSON 字符串。
   - TELEGRAM_TOKEN：您的 Telegram Bot API Token。
   - TELEGRAM_CHAT_ID：您的 Telegram Chat ID（可以是您的私人聊天或群组）。
 
 ### 2，fork本项目
-1. **修改 `SERVERS_JSON`**
+1. **修改 `ACCOUNTS_JSON`**
 
-   在 fork 后的仓库中，用户需要在项目的 Settings -> Secrets 页面添加和配置 `SERVERS_JSON`。
+   在 fork 后的仓库中，用户需要在项目的 Settings -> Secrets 页面添加和配置 `ACCOUNTS_JSON`。
 
    ```json
    [
@@ -62,6 +62,6 @@
 
 ### 注意事项
 
-- 确保在 `SERVERS_JSON` 中正确配置每台服务器的信息，包括主机名、端口、用户名和密码。
+- 确保在 `ACCOUNTS_JSON` 中正确配置每台服务器的信息，包括主机名、端口、用户名和密码。
 - 定期检查 GitHub Actions 的执行结果和 Telegram 的通知，确保服务器状态的监控和恢复工作正常进行。
 
