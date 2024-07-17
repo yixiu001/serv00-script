@@ -2,7 +2,7 @@
 
 ## 恢复 vless 服务并发送 Telegram 通知
 
-## 使用要求
+### 使用要求
 必须是看以下视频部署的vless节点方可直接使用
 [serv00一键部署vless节点](https://youtu.be/QnlzpvDl_mo)
 如果不是看以上视频部署的，可自行修改.github/workflows/check_vless.sh里面第31行命令
