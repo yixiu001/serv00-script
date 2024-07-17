@@ -23,16 +23,7 @@ output_yi_xiu() {
     echo -e "--------------------------------------------------------------------------------------------------"
 }
 
-# 检查pm2 vless的状态
-check_pm2_vless_status() {
-    pm2 describe vless &>/dev/null
-    if [[ $? -eq 0 ]]; then
-        check_vless_status
-    else
-        echo "未找到pm2 vless进程，检查是否有快照..."
-        check_pm2_vless_snapshot
-    fi
-}
+
 # Function to generate a UUID
 generate_uuid() {
     for i in {1..3}; do
@@ -98,6 +89,23 @@ deploy_vless() {
     echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
 }
 
+# 启动pm2 vless进程
+start_pm2_vless_process() {
+    echo "正在启动pm2 vless进程..."
+    ~/.npm-global/bin/pm2 start ~/domains/$USER.serv00.net/vless/app.js --name vless
+    echo -e "${GREEN}pm2 vless进程已启动。${NC}"
+}
+# 检查vless的状态
+check_vless_status() {
+    status=$(pm2 status vless | grep -w 'vless' | awk '{print $18}')
+    if [[ "$status" == "online" ]]; then
+        echo "vless进程正在运行。"
+    else
+        echo "vless进程未运行或已停止，正在重启..."
+        pm2 restart vless
+        echo -e "${GREEN}vless进程已重启。${NC}"
+    fi
+}
 # 检查是否有pm2 vless快照
 check_pm2_vless_snapshot() {
     if [[ -f ~/.pm2/dump.pm2 ]]; then
@@ -111,25 +119,17 @@ check_pm2_vless_snapshot() {
     fi
 }
 
-# 启动pm2 vless进程
-start_pm2_vless_process() {
-    echo "正在启动pm2 vless进程..."
-    ~/.npm-global/bin/pm2 start ~/domains/$USER.serv00.net/vless/app.js --name vless
-    echo -e "${GREEN}pm2 vless进程已启动。${NC}"
-}
 
-# 检查vless的状态
-check_vless_status() {
-    status=$(pm2 status vless | grep -w 'vless' | awk '{print $18}')
-    if [[ "$status" == "online" ]]; then
-        echo "vless进程正在运行。"
+# 检查pm2 vless的状态
+check_pm2_vless_status() {
+    pm2 describe vless &>/dev/null
+    if [[ $? -eq 0 ]]; then
+        check_vless_status
     else
-        echo "vless进程未运行或已停止，正在重启..."
-        pm2 restart vless
-        echo -e "${GREEN}vless进程已重启。${NC}"
+        echo "未找到pm2 vless进程，检查是否有快照..."
+        check_pm2_vless_snapshot
     fi
 }
-
 # 主函数
 main() {
     local port=3000  # Default port
