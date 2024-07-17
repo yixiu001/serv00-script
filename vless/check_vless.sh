@@ -85,7 +85,7 @@ deploy_vless() {
     echo -e "端口号: ${GREEN}${port}${NC}"
     echo -e "UUID: ${GREEN}${uuid}${NC}"
     echo -e "域名: ${GREEN}$USER.serv00.net${NC}"
-    echo -e "vless进程维护定时任务脚本: ${GREEN}~/domains/$USER.serv00.net/vless/check_vless.sh${NC}"
+    echo -e "vless进程维护定时任务脚本: ${GREEN}cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh${NC}"
     echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
 }
 
@@ -158,12 +158,11 @@ main() {
             port=$(jq -r '.port' config.json)
             echo -e "UUID: ${uuid}"
             echo -e "Port: ${port}"
-            echo -e "域名: ${GREEN}$USER.serv00.net${NC}"
-            echo -e "vless进程维护定时任务脚本: ${GREEN}cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh${NC}"
-            echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
+            echo -e "域名: $USER.serv00.net"
+            echo -e "VLESS节点信息: vless://${uuid}@$USER.serv00.net:${port}?flow=&security=none&encryption=none&type=ws&host=$USER.serv00.net&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless"
 
         else
-            echo -e "${GREEN}config.json 文件不存在或格式错误。${NC}"
+            echo -e "config.json 文件不存在或格式错误。"
         fi
         echo "开始检查pm2 vless进程..."
         check_pm2_vless_status
