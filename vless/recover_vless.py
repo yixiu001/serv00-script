@@ -9,7 +9,12 @@ telegram_token = os.getenv('TELEGRAM_TOKEN')
 telegram_chat_id = os.getenv('TELEGRAM_CHAT_ID')
 
 # 解析 JSON 字符串
-servers = json.loads(accounts_json)
+# 检查并解析 JSON 字符串
+try:
+    servers = json.loads(accounts_json)
+except json.JSONDecodeError:
+    print("ACCOUNTS_JSON 参数格式错误")
+    exit(1)
 
 # 初始化汇总消息
 summary_message = "serv00-vless 恢复操作结果：\n"
