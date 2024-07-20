@@ -97,6 +97,7 @@ start_pm2_vless_process() {
 }
 # 检查vless的状态
 check_vless_status() {
+    echo "Trying to run PM2 command: $(which pm2)"
     status=$(~/.npm-global/bin/pm2 status vless | grep -w 'vless' | awk '{print $18}')
     if [[ "$status" == "online" ]]; then
         echo "vless进程正在运行。"
