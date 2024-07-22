@@ -29,7 +29,7 @@ deploy_vless() {
     # 安装依赖
     npm install --prefix ./vless
     # 进入工作目录
-    cp -r ./vless ~/domains/spz.niboy.top/vless/
+    cp -r ./vless ~/domains/spz.niboy.top
 # ANSI颜色码
 GREEN='\033[0;32m'
 NC='\033[0m'  # 恢复默认颜色
