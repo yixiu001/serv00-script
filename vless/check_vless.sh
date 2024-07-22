@@ -53,9 +53,9 @@ generate_uuid() {
 # Function to save config.json
 save_config() {
     local port=$1
-    if [[ ! -f ~/domains/add.niboy.top/vless/config.json ]]; then
+    if [[ ! -f ~/domains/spz.niboy.top/vless/config.json ]]; then
         uuid=$(generate_uuid)
-        cat <<EOL > ~/domains/add.niboy.top/vless/config.json
+        cat <<EOL > ~/domains/spz.niboy.top/vless/config.json
 {
     "uuid": "$uuid",
     "port": $port
@@ -64,7 +64,7 @@ EOL
         echo "生成config.json文件。"
     else
         # Update the port in config.json if it exists
-        jq --arg port "$port" '.port = ($port | tonumber)' ~/domains/add.niboy.top/vless/config.json > ~/domains/add.niboy.top/vless/config_tmp.json && mv ~/domains/add.niboy.top/vless/config_tmp.json ~/domains/add.niboy.top/vless/config.json
+        jq --arg port "$port" '.port = ($port | tonumber)' ~/domains/spz.niboy.top/vless/config.json > ~/domains/spz.niboy.top/vless/config_tmp.json && mv ~/domains/spz.niboy.top/vless/config_tmp.json ~/domains/spz.niboy.top/vless/config.json
         echo "config.json文件已存在，端口号已更新。"
     fi
 }
@@ -77,22 +77,22 @@ deploy_vless() {
     # 安装依赖
     npm install
     # 启动vless项目
-    ~/.npm-global/bin/pm2 start ~/domains/add.niboy.top/vless/app.js --name vless
+    ~/.npm-global/bin/pm2 start ~/domains/spz.niboy.top/vless/app.js --name vless
     # 保存pm2进程状态
     ~/.npm-global/bin/pm2 save
     # ANSI颜色码
     output_yi_xiu
     echo -e "端口号: ${GREEN}${port}${NC}"
     echo -e "UUID: ${GREEN}${uuid}${NC}"
-    echo -e "域名: ${GREEN}add.niboy.top${NC}"
-    echo -e "vless进程维护定时任务脚本: ${GREEN}cd ~/domains/add.niboy.top/vless && ./check_vless.sh${NC}"
-    echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@add.niboy.top:${port}?flow=&security=none&encryption=none&type=ws&host=add.niboy.top&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
+    echo -e "域名: ${GREEN}spz.niboy.top${NC}"
+    echo -e "vless进程维护定时任务脚本: ${GREEN}cd ~/domains/spz.niboy.top/vless && ./check_vless.sh${NC}"
+    echo -e "VLESS节点信息: ${GREEN}vless://${uuid}@spz.niboy.top:${port}?flow=&security=none&encryption=none&type=ws&host=spz.niboy.top&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless${NC}"
 }
 
 # 启动pm2 vless进程
 start_pm2_vless_process() {
     echo "正在启动pm2 vless进程..."
-    ~/.npm-global/bin/pm2 start ~/domains/add.niboy.top/vless/app.js --name vless
+    ~/.npm-global/bin/pm2 start ~/domains/spz.niboy.top/vless/app.js --name vless
     echo -e "${GREEN}pm2 vless进程已启动。${NC}"
 }
 # 检查vless的状态
@@ -158,8 +158,8 @@ main() {
             port=$(jq -r '.port' config.json)
             echo -e "UUID: ${uuid}"
             echo -e "Port: ${port}"
-            echo -e "域名: add.niboy.top"
-            echo -e "VLESS节点信息: vless://${uuid}@add.niboy.top:${port}?flow=&security=none&encryption=none&type=ws&host=add.niboy.top&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless"
+            echo -e "域名: spz.niboy.top"
+            echo -e "VLESS节点信息: vless://${uuid}@spz.niboy.top:${port}?flow=&security=none&encryption=none&type=ws&host=spz.niboy.top&path=/&sni=&fp=&pbk=&sid=#$USER.serv00.vless"
 
         else
             echo -e "config.json 文件不存在或格式错误。"
