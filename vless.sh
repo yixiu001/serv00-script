@@ -50,7 +50,7 @@ echo -e "-----------------------------------------------------------------------
 echo -e "一休YouTuBe: ${GREEN}https://www.youtube.com/@yixiu001${NC}"
 echo -e "TG技术交流群: ${GREEN}https://t.me/yxjsjl${NC}"
 echo -e "--------------------------------------------------------------------------------------------------"
-echo -e "请执行以下脚本:${GREEN}cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh -p <端口号>${NC}"
+echo -e "请执行以下脚本:${GREEN}cd ~/domains/$USER.serv00.net/vless && ./check_vless.sh -p 17061${NC}"
 }
 
 # Main function
